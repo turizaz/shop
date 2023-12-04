@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  # Сервис для Node.js приложения
+  backend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    volumes:
+      - ./backend:/backend
+    ports:
+      - '9229:9229'
+      - '9230:9230'
+      - '3000:3000'
+
+
+
+#    image: node:14  # Выберите версию Node.js, которую хотите использовать
+#    working_dir: /app
+#    volumes:
+#      - ./backend:/backend  # Путь к вашему Node.js приложению
+#    ports:
+#      - "3000:3000"  # Проброс портов, если ваше приложение слушает на порту 3000
+#    environment:
+#      - NODE_ENV=development
+#    command: npm start  # Команда для запуска вашего приложения
+
+  # Сервис для PostgreSQL
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: shop
+      POSTGRES_USER: bariga
+      POSTGRES_PASSWORD: kardachi
+    ports:
+      - "5432:5432"  # Проброс портов для доступа к базе данных
+
+  # Дополнительные сервисы, такие как Redis, можно добавить по мере необходимости
